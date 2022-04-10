@@ -1,17 +1,20 @@
 console.log("TicTacToe - GAME");
 
 /* GLOBAL DEFINITIONS */
-const playOptions = ["Rock", "Paper", "Scissors"];
+const playOptions = ["ROCK", "PAPER", "SCISSCORS"];
 
 
 /* MAIN */
-const playerSelection = getPlayerSelection();
-const opponentSelection = getOpponentsSelection();
-console.log("Player: " + playerSelection);
-console.log("\tagainst");
-console.log("Computer: " + opponentSelection);
-console.log(playRound(playerSelection, opponentSelection));
-
+// const playerSelection = getPlayerSelection();
+// const opponentSelection = getOpponentsSelection();
+// console.log("Player: " + playerSelection);
+// console.log("\tagainst");
+// console.log("Computer: " + opponentSelection);
+// console.log(playRound(playerSelection, opponentSelection));
+const numGames = 5;
+let playerWinCounter = 0;
+let opponentWinCounter = 0;
+game();
 
 
 /* FUNCTIONS */
@@ -43,15 +46,34 @@ function getPlayerSelection() {
 
 
 function playRound(playerSelection, opponentSelection) {
+    console.log("Player: " + playerSelection);
+    console.log("\tagainst");
+    console.log("Computer: " + opponentSelection);
     if (playerSelection == opponentSelection) {
         return `TIE!\n${playerSelection} against ${opponentSelection}`
     } else if (playerSelection == 'ROCK' && opponentSelection == 'PAPER' ||
         playerSelection == 'SCISSCORS' && opponentSelection == 'ROCK' ||
         playerSelection == 'PAPER' && opponentSelection == 'SCISSCORS'
     ) {
-        return `YOU LOSE!\n${playerSelection} looses against ${opponentSelection}`
+        opponentWinCounter++;
+        return `YOU LOSE!\n${playerSelection} looses against ${opponentSelection}`;
     } else {
-        return `YOU WIN!\n${playerSelection} wins against ${opponentSelection}`
+        playerWinCounter++;
+        return `YOU WIN!\n${playerSelection} wins against ${opponentSelection}`;
     }
 }
 
+
+function game() {
+    for (let round = 1; round <= numGames; round++) {
+        console.log(`Round ${round}/${numGames}!`);
+        console.log(playRound(getPlayerSelection(), getOpponentsSelection()));
+        console.log(`PLAYER: ${playerWinCounter} \t COMPUTER: ${opponentWinCounter}`);
+    }
+    if (playerWinCounter > opponentWinCounter)
+        console.log("GRATULATION - YOU WON THE GAME!!!");
+    else if (playerWinCounter < opponentWinCounter)
+        console.log("DAMN - YOU LOST THE GAME!!!");
+    else
+        console.log("The GAME is TIE!");
+}
